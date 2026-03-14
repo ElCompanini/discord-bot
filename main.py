@@ -26,7 +26,7 @@ async def play(ctx, *, search):
     if ctx.voice_client is None:
         await voice_channel.connect()
     elif ctx.voice_client.channel != voice_channel:
-        await ctx.voice_client.move:to(voice_channel)
+        await ctx.voice_client.move_to(voice_channel)
 
     # Buscar en YT
 
