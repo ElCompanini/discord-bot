@@ -21,9 +21,10 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 #Opciones de YT
 
 YDL_OPTIONS = {
-    'format': 'bestaudio',
+    'format': 'bestaudio/best',
     'noplaylist': True,
-    'cookiefile': '/app/cookies.txt'
+    'cookiefile': '/app/cookies.txt',
+    'extractor_args': {'youtube': {'player_client': ['android']}},
 }
 FFMPEG_OPTIONS = {'options': '-vn'}
 queue = []
