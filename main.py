@@ -24,7 +24,7 @@ YDL_OPTIONS = {
     'format': 'bestaudio/best',
     'noplaylist': True,
     'cookiefile': '/app/cookies.txt',
-    'extractor_args': {'youtube': {'player_client': ['ios']}},
+    'extractor_args': {'youtube': {'player_client': ['web']}},
 }
 
 FFMPEG_OPTIONS = {'options': '-vn'}
