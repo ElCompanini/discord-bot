@@ -85,21 +85,25 @@ async def on_reaction_add(reaction, user):
         return
 
     target_lang = FLAG_TO_LANG[emoji]
-    original_message = reaction.message
+
+    # Agarrar mensaje del canal y no del caché
+
+    channel = reaction.message.channel
+    message = await channel.fetch_message(reaction.message.id)
 
     # No traducir si el mensaje está vacío
-    if not original_message.content:
-        await original_message.channel.send("❌ No text to translate.", delete_after=5)
+    if not message.content:
+        await channel.send("❌ No text to translate.", delete_after=5)
         return
 
-    translated = translate_text(original_message.content, target_lang)
+    translated = translate_text(message.content, target_lang)
 
     if translated is None:
-        await original_message.channel.send("❌ Error translating.", delete_after=5)
+        await channel.send("❌ Error translating.", delete_after=5)
         return
 
     # Enviar traducción y autoeliminarse a los 30 segundos
-    await original_message.channel.send(
+    await channel.send(
         f" **Translating to {emoji} ({target_lang}):**\n{translated}\n-# translated by {user.mention} • Deleting in 30s",
         delete_after=30
     )
