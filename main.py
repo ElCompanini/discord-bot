@@ -43,7 +43,7 @@ async def play(ctx, *, search):
     # Buscar en YT
 
     with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
-        info = ydl.extract_info(f"ytsearch:{search}", downliad=False)
+        info = ydl.extract_info(f"ytsearch:{search}", download=False)
         url = info['entries'][0]['title']
         title = info['entries'][0]['title']
     
