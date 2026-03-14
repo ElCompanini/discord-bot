@@ -6,6 +6,18 @@ import re
 import yt_dlp
 import asyncio
 
+
+# Reemplaza el config.py por esto
+TOKEN = os.getenv("TOKEN")
+DEEPL_KEY = os.getenv("DEEPL_KEY")
+
+intents = discord.Intents.default()
+intents.message_content = True
+intents.reactions = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+
 #Opciones de YT
 
 YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist': True}
@@ -61,23 +73,13 @@ async def stop(ctx):
         await ctx.voice_client.disconnect()
         await ctx.send("Bot desconectado")
 
-@bot.comman()
+@bot.command()
 async def cola(ctx):
     if not queue:
         await ctx.send("La cola está vacía")
     else:
         lista = "\n".join([f"{i+1}. {title}" for i, (_, title) in enumerate(queue)])
         await ctx.send(f"**Cola:**\n{lista}")
-
-# Reemplaza el config.py por esto
-TOKEN = os.getenv("TOKEN")
-DEEPL_KEY = os.getenv("DEEPL_KEY")
-
-intents = discord.Intents.default()
-intents.message_content = True
-intents.reactions = True
-
-bot = commands.Bot(command_prefix='$', intents=intents)
 
 @bot.command()
 async def test(ctx, arg):
