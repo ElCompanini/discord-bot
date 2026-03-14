@@ -3,9 +3,9 @@ from discord.ext import commands
 import requests
 import os
 import re
-import yt_dlp
-import asyncio
 
+import asyncio
+import wavelink
 
 # Reemplaza el config.py por esto
 TOKEN = os.getenv("TOKEN")
@@ -20,72 +20,63 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 
 #Opciones de YT
 
-YDL_OPTIONS = {
-    'format': 'bestaudio/best',
-    'noplaylist': True,
-    'cookiefile': '/app/cookies.txt',
-    'extractor_args': {'youtube': {'player_client': ['web']}},
-}
+@bot.event
+async def on_ready():
+    print(f"Estamos dentro! {bot.user}")
+    await wavelink.NodePool.create_node(
+        bot=bot,
+        host='lavalink.devamop.in',
+        port=443,
+        password='DevamOP',
+        https=True
+    )
 
-FFMPEG_OPTIONS = {'options': '-vn'}
-queue = []
+@bot.event
+async def on_wavelink_node_ready(node: wavelink.Node):
+    print(f"Nodo {node.identifier} conectado!")
 
 @bot.command()
 async def play(ctx, *, search):
-    #Verificar si hay alguien en el canal de voz
     if not ctx.author.voice:
-        await ctx.send("No hay nadie en el canal de voz", delete_after=10)
+        await ctx.send("❌ Tienes que estar en un canal de voz.", delete_after=10)
         return
-    
-    voice_channel = ctx.author.voice.channel
 
-    #Conectar al canal si hay alguien en él
+    vc: wavelink.Player = ctx.voice_client or await ctx.author.voice.channel.connect(cls=wavelink.Player)
 
-    if ctx.voice_client is None:
-        await voice_channel.connect()
-    elif ctx.voice_client.channel != voice_channel:
-        await ctx.voice_client.move_to(voice_channel)
+    track = await wavelink.YouTubeTrack.search(search, return_first=True)
+    if not track:
+        await ctx.send("❌ No se encontró la canción.")
+        return
 
-    # Buscar en YT
-
-    with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
-        info = ydl.extract_info(f"ytsearch:{search}", download=False)
-        url = info['entries'][0]['title']
-        title = info['entries'][0]['title']
-    
-    queue.append((url, title))
-    await ctx.send(f"Agregada a la cola: **{title}**")
-
-    if not ctx.voice_client.is_playing():
-        await play_next(ctx)
-
-async def play_next(ctx):
-    if queue:
-        url, title = queue.pop(0)
-        souce = await discord.FFmpegOpusAudio.from_probe(url, **FFMPEG_OPTIONS)
-        ctx.voice_client.play(souce, ater=lambda e: asyncio.run_coroutine_threadsafe)
-        await ctx.send(f"Reproduciendo: **{title}**")
+    if vc.is_playing():
+        await vc.queue.put_wait(track)
+        await ctx.send(f"✅ Agregado a la cola: **{track.title}**")
+    else:
+        await vc.play(track)
+        await ctx.send(f"🎵 Reproduciendo: **{track.title}**")
 
 @bot.command()
 async def skip(ctx):
-    if ctx.voice_client and ctx.voice_client.is_playing():
-        ctx.voice_client.stop()
-        await ctx.send(f"Cancion skipeada")
+    vc: wavelink.Player = ctx.voice_client
+    if vc and vc.is_playing():
+        await vc.stop()
+        await ctx.send("⏭️ Canción saltada.")
 
 @bot.command()
 async def stop(ctx):
-    if ctx.voice_client:
-        queue.clear()
-        await ctx.voice_client.disconnect()
-        await ctx.send("Bot desconectado")
+    vc: wavelink.Player = ctx.voice_client
+    if vc:
+        await vc.disconnect()
+        await ctx.send("⏹️ Bot desconectado.")
 
 @bot.command()
 async def cola(ctx):
-    if not queue:
-        await ctx.send("La cola está vacía")
+    vc: wavelink.Player = ctx.voice_client
+    if not vc or vc.queue.is_empty:
+        await ctx.send("📭 La cola está vacía.")
     else:
-        lista = "\n".join([f"{i+1}. {title}" for i, (_, title) in enumerate(queue)])
-        await ctx.send(f"**Cola:**\n{lista}")
+        lista = "\n".join([f"{i+1}. {t.title}" for i, t in enumerate(vc.queue)])
+        await ctx.send(f"🎵 **Cola:**\n{lista}")
 
 @bot.command()
 async def test(ctx, arg):
