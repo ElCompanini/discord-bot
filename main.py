@@ -83,8 +83,17 @@ async def test(ctx, arg):
     await ctx.send(arg)
 
 @bot.event
+
+@bot.event
 async def on_ready():
     print(f"Estamos dentro! {bot.user}")
+    await wavelink.NodePool.create_node(
+        bot=bot,
+        host='lavalink.devamop.in',
+        port=443,
+        password='DevamOP',
+        https=True
+    )
 
 FLAG_TO_LANG = {
     "🇺🇸": "EN-US",
