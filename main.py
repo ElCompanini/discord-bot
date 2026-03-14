@@ -24,8 +24,9 @@ YDL_OPTIONS = {
     'format': 'bestaudio/best',
     'noplaylist': True,
     'cookiefile': '/app/cookies.txt',
-    'extractor_args': {'youtube': {'player_client': ['android']}},
+    'extractor_args': {'youtube': {'player_client': ['ios']}},
 }
+
 FFMPEG_OPTIONS = {'options': '-vn'}
 queue = []
 
