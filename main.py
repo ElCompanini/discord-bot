@@ -89,9 +89,9 @@ async def on_ready():
     print(f"Estamos dentro! {bot.user}")
     await wavelink.NodePool.create_node(
         bot=bot,
-        host='lavalink.devamop.in',
+        host='lavalink.api.seraphinachannel.com',
         port=443,
-        password='DevamOP',
+        password='HarukaAya!1',
         https=True
     )
 
