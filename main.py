@@ -87,7 +87,6 @@ async def cola(ctx):
 async def test(ctx, arg):
     await ctx.send(arg)
 
-@bot.event
 
 @bot.event
 async def on_ready():
@@ -96,8 +95,8 @@ async def on_ready():
     try:
         node = await wavelink.NodePool.create_node(
             bot=bot,
-            host='lavalink.railway.internal',
-            port=2333,
+            host='yamabiko.proxy.rlwy.net',
+            port=27611,
             password='brooks80',
             https=False
         )
