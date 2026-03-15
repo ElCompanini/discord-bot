@@ -25,13 +25,17 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 @bot.event
 async def on_ready():
     print(f"Estamos dentro! {bot.user}")
-    await wavelink.NodePool.create_node(
-        bot=bot,
-        host='mainline.proxy.rlwy.net',
-        port=55904,
-        password='brooks80',
-        https=False
-    )
+    try:
+        node = await wavelink.NodePool.create_node(
+            bot=bot,
+            host='mainline.proxy.rlwy.net',
+            port=25904,
+            password='brooks80',
+            https=False
+        )
+        print(f"Nodo conectado: {node.identifier}")
+    except Exception as e:
+        print(f"Error conectando nodo: {e}")
 
 @bot.event
 async def on_wavelink_node_ready(node: wavelink.Node):
