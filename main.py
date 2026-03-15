@@ -160,6 +160,9 @@ async def on_message(message):
     if re.search(r'c *h *e *r *r *y|y *r *r *e *h *c', message.content.lower()):
         await message.channel.send("I know a guy who loves that jam")
 
+    if "jawsman" in message.content.lower():
+        await message.channel.send("https://imgur.com/Eyfbikf")
+
     if re.search(r's *h *a *e|e *a *h *s', message.content.lower()):
         await message.channel.send("")
 
