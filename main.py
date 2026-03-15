@@ -19,6 +19,9 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 
 #WaveLink
 
+@bot.event
+async def on_wavelink_node_ready(node: wavelink.Node):
+    print(f"Nodo Lavalink conectado: {node.identifier}")
 
 #Opciones de YT
 
