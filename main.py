@@ -3,7 +3,6 @@ from discord.ext import commands
 import requests
 import os
 import re
-
 import asyncio
 import wavelink
 
@@ -141,6 +140,9 @@ async def on_message(message):
 
     if re.search(r'n *i *e *b *a|a *b *e *i *n', message.content.lower()):
         await message.channel.send("Based")
+
+    if re.search(r'b *a *s *e *d|d *e *s *a *b', message.content.lower()):
+        await message.channel.send("Nieba")
 
     # Necesario para que los demás comandos sigan funcionando
     await bot.process_commands(message)
