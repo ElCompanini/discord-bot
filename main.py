@@ -28,9 +28,9 @@ async def on_ready():
     await wavelink.NodePool.create_node(
         bot=bot,
         host='lavalink-production-3982.up.railway.app',
-        port=443,
+        port=80,
         password='brooks80',
-        https=True
+        https=False
     )
 
 @bot.event
