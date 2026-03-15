@@ -147,6 +147,9 @@ async def on_message(message):
     if re.search(r'd *a *r *i *c *k|k *c *i *r *a *d', message.content.lower()):
         await message.channel.send("God, that guy love cherry jam")
 
+    if re.search(r'c *h *e *r *r *y|y *r *r *e *h *c', message.content.lower()):
+        await message.channel.send("I know a guy who loves that jam")
+
     # Necesario para que los demás comandos sigan funcionando
     await bot.process_commands(message)
 @bot.event
