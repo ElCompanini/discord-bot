@@ -155,7 +155,7 @@ async def on_message(message):
         await message.channel.send("Nieba")
 
     if re.search(r'd *a *r *i *c *k|k *c *i *r *a *d', message.content.lower()):
-        await message.channel.send("God, that guy love cherry jam")
+        await message.channel.send("God, that guy loves cherry jam")
 
     if re.search(r'c *h *e *r *r *y|y *r *r *e *h *c', message.content.lower()):
         await message.channel.send("I know a guy who loves that jam")
