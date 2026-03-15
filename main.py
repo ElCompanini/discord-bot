@@ -27,8 +27,8 @@ async def on_ready():
     print(f"Estamos dentro! {bot.user}")
     await wavelink.NodePool.create_node(
         bot=bot,
-        host='lavalink-production-3982.up.railway.app',
-        port=80,
+        host='mainline.proxy.rlwy.net',
+        port=55904,
         password='brooks80',
         https=False
     )
