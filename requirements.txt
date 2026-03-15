@@ -2,4 +2,4 @@ discord.py[voice]
 requests
 yt-dlp
 PyNaCl
-wavelink==2.6.5
+wavelink==3.4.1
