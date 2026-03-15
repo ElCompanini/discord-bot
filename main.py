@@ -92,13 +92,18 @@ async def test(ctx, arg):
 @bot.event
 async def on_ready():
     print(f"Estamos dentro! {bot.user}")
-    await wavelink.NodePool.create_node(
-        bot=bot,
-        host='lavalink.api.seraphinachannel.com',
-        port=443,
-        password='HarukaAya!1',
-        https=True
-    )
+    await asyncio.sleep(3)
+    try:
+        node = await wavelink.NodePool.create_node(
+            bot=bot,
+            host='lavalink.railway.internal',
+            port=2333,
+            password='brooks80',
+            https=False
+        )
+        print(f"Nodo creado: {node.identifier}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 FLAG_TO_LANG = {
     "🇺🇸": "EN-US",
