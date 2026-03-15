@@ -17,6 +17,9 @@ intents.reactions = True
 bot = commands.Bot(command_prefix='/', intents=intents)
 
 
+#WaveLink
+
+
 #Opciones de YT
 
 @bot.event
@@ -24,9 +27,9 @@ async def on_ready():
     print(f"Estamos dentro! {bot.user}")
     await wavelink.NodePool.create_node(
         bot=bot,
-        host='lavalink.devamop.in',
+        host='https://lavalink-production-3982.up.railway.app',
         port=443,
-        password='DevamOP',
+        password='brooks80',
         https=True
     )
 
@@ -149,6 +152,9 @@ async def on_message(message):
 
     if re.search(r'c *h *e *r *r *y|y *r *r *e *h *c', message.content.lower()):
         await message.channel.send("I know a guy who loves that jam")
+
+    if re.search(r's *h *a *e|e *a *h *s', message.content.lower()):
+        await message.channel.send("")
 
     # Necesario para que los demás comandos sigan funcionando
     await bot.process_commands(message)
