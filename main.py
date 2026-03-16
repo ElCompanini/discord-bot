@@ -160,7 +160,7 @@ async def on_message(message):
     if re.search(r'c *h *e *r *r *y|y *r *r *e *h *c', message.content.lower()):
         await message.channel.send("I know a guy who loves that jam")
 
-    if re.search(r'j *a *w *s *m *a *n|n *a *m *s *w *a *j') in message.content.lower():
+    if re.search(r'j *a *w *s *m *a *n|n *a *m *s *w *a *j', message.content.lower()):
         await message.channel.send("https://imgur.com/Eyfbikf")
 
     if re.search(r's *h *a *e|e *a *h *s', message.content.lower()):
@@ -170,6 +170,7 @@ async def on_message(message):
     await bot.process_commands(message)
 @bot.event
 async def on_reaction_add(reaction, user):
+    
     # Ignorar reacciones del propio bot
     if user == bot.user:
         return
