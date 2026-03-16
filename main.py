@@ -164,7 +164,7 @@ async def on_message(message):
         await message.channel.send("https://imgur.com/Eyfbikf")
 
     if re.search(r'i *r *o *n *i *e *s|s *e *i *n *o *r *i', message.content.lower()):
-        await message.channel.send("https://imgur.com/a/BXyDf60")
+        await message.channel.send("https://i.imgur.com/YTz93Hz.png")
 
     if re.search(r's *h *a *e|e *a *h *s', message.content.lower()):
         await message.channel.send("")
